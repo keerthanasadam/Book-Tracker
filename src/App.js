@@ -9,6 +9,23 @@ class BooksApp extends React.Component {
     wantToRead: [],
     read: [],
     shelf: '',
+    shelfs: [
+      {
+        name: 'Currently Reading',
+        value: 'currentlyReading'
+      },
+      {
+        name: 'Want to Read',
+        value: 'wantToRead'
+      },
+      {
+        name: 'Read',
+        value: 'read'
+      },
+      {
+        name: 'None',
+        value: 'none'
+      }],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -44,9 +61,9 @@ class BooksApp extends React.Component {
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          <BookShelf books={this.state.currentlyReading} shelf='Currently Reading' />
-          <BookShelf books={this.state.wantToRead} shelf='Want To Read' />
-          <BookShelf books={this.state.read} shelf='Read' />
+          <BookShelf books={this.state.currentlyReading} shelf='Currently Reading' shelfs={this.state.shelfs} />
+          <BookShelf books={this.state.wantToRead} shelf='Want To Read' shelfs={this.state.shelfs} />
+          <BookShelf books={this.state.read} shelf='Read' shelfs={this.state.shelfs} />
         </div>
         <div className="open-search">
           <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
