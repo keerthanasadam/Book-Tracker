@@ -35,9 +35,7 @@ class BooksApp extends React.Component {
      */
   }
 
-  async componentDidMount() {
-    let booksList = await BooksAPI.getAll();
-    console.log(booksList);
+  updateStates(booksList) {
     this.setState(() => ({
       currentlyReading: booksList.filter((book) => {
         return book.shelf === 'currentlyReading'
@@ -51,6 +49,18 @@ class BooksApp extends React.Component {
     }))
   }
 
+
+  async componentDidMount() {
+    let booksList = await BooksAPI.getAll();
+    this.updateStates(booksList);
+  }
+
+  async updatedParentShelf(shelf, book) {
+    let books = await BooksAPI.update(book, shelf);
+    this.updateStates(books);
+  }
+
+
   render() {
     return (
       <div>
@@ -60,9 +70,9 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <BookShelf books={this.state.currentlyReading} shelf='Currently Reading' shelfs={this.state.shelfs} showShelf={true} />
-              <BookShelf books={this.state.wantToRead} shelf='Want To Read' shelfs={this.state.shelfs} showShelf={true} />
-              <BookShelf books={this.state.read} shelf='Read' shelfs={this.state.shelfs} showShelf={true} />
+              <BookShelf books={this.state.currentlyReading} shelf='Currently Reading' shelfs={this.state.shelfs} updateShelf={(shelf, book) => this.updatedParentShelf(shelf, book)} />
+              <BookShelf books={this.state.wantToRead} shelf='Want To Read' shelfs={this.state.shelfs} updateShelf={() => this.updatedParentShelf()} />
+              <BookShelf books={this.state.read} shelf='Read' shelfs={this.state.shelfs} updateShelf={this.updatedParentShelf} />
             </div>
             <div className="open-search">
               <Link to="/search" className="button">Add a book</Link>

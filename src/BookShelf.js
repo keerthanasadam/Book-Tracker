@@ -7,16 +7,15 @@ class BookShelf extends React.Component {
         }
     }
 
-    /* 
-        updateShelf(event) {
-            console.log(this);
-            this.props.updateParentShelf(event);
-            // this.setState({
-            //     shelf: event.target.value
-            // })
-            // await BooksAPI.update(book, shelf);
-        }
-     */
+
+    updateShelf(value, book) {
+        console.log(book);
+        this.setState({
+            shelf: value
+        })
+        this.props.updateShelf(value, book);
+    }
+
     render() {
 
         const books = this.props.books;
@@ -33,7 +32,7 @@ class BookShelf extends React.Component {
                                     <div className="book-top">
                                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' + book.imageLinks.smallThumbnail + ')' }}></div>
                                         <div className="book-shelf-changer">
-                                            <select>
+                                            <select value={this.state.shelf || book.shelf} onChange={(event) => this.updateShelf(event.target.value, book)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 {
                                                     shelfs.map((shelf) => (
