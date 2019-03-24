@@ -7,7 +7,6 @@ class BookShelf extends React.Component {
         }
     }
 
-
     updateShelf(value, book) {
         console.log(book);
         this.setState({
@@ -35,8 +34,8 @@ class BookShelf extends React.Component {
                                             <select value={this.state.shelf || book.shelf} onChange={(event) => this.updateShelf(event.target.value, book)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 {
-                                                    shelfs.map((shelf) => (
-                                                        <option value={shelf.value} >{shelf.name}</option>
+                                                    shelfs.map((shelf, index) => (
+                                                        <option value={shelf.value} key={index} >{shelf.name}</option>
                                                     ))
                                                 }
                                             </select>
