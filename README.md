@@ -1,6 +1,6 @@
 # BookTracker Project
 
-BookTracker is a bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read. The project is build using React fundamentals like React Router, Components, lifecycle events and State Management. The starter template for this  is provided by Udacity.
+BookTracker is a bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read. The project is build using React fundamentals like React Router, Components, lifecycle events and State Management. The starter template for this project is provided by Udacity.
 
 ## TL;DR
 
