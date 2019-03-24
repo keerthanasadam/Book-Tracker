@@ -5,7 +5,6 @@ class BookShelf extends React.Component {
         super(props);
         this.state = {
             shelf: '',
-            updatedShelf: {}
         }
     }
 
@@ -13,27 +12,21 @@ class BookShelf extends React.Component {
         this.setState({
             shelf: value
         })
-        let shelfs = await BooksAPI.update(book, value);
-        this.setState(() => ({
-            updatedShelf: shelfs
-        }))
+        await BooksAPI.update(book, value);
+        this.props.updateAllShelfs();
     }
 
     render() {
-        const shelf = this.state.shelf;
         const books = this.props.books;
         const shelfs = this.props.shelfs;
         const shelfName = this.props.shelf;
-        const updatedShelf = this.state.updatedShelf;
-        const emptyObjectCheck = Object.entries(updatedShelf).length === 0 && updatedShelf.constructor === Object;
-        const updateBooks = shelf === "" || emptyObjectCheck ? books : books.filter((book) => this.state.updatedShelf[book.shelf].find((u) => book.id === u));
 
         return (
             <div className="bookshelf" >
                 <h2 className="bookshelf-title">{shelfName}</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                        {updateBooks.map((book) => (
+                        {books.map((book) => (
                             <li key={book.id}>
                                 <div className="book">
                                     <div className="book-top">

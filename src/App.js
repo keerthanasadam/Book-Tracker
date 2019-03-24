@@ -50,6 +50,21 @@ class BooksApp extends React.Component {
     }))
   }
 
+  async updateAllShelfs() {
+    let booksList = await BooksAPI.getAll();
+    this.setState(() => ({
+      currentlyReading: booksList.filter((book) => {
+        return book.shelf === 'currentlyReading'
+      }),
+      wantToRead: booksList.filter((book) => {
+        return book.shelf === 'wantToRead'
+      }),
+      read: booksList.filter((book) => {
+        return book.shelf === 'read'
+      }),
+    }))
+  }
+
 
   render() {
     return (
@@ -60,9 +75,9 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <BookShelf books={this.state.currentlyReading} shelf='Currently Reading' shelfs={this.state.shelfs} />
-              <BookShelf books={this.state.wantToRead} shelf='Want To Read' shelfs={this.state.shelfs} />
-              <BookShelf books={this.state.read} shelf='Read' shelfs={this.state.shelfs} />
+              <BookShelf books={this.state.currentlyReading} shelf='Currently Reading' shelfs={this.state.shelfs} updateAllShelfs={this.updateAllShelfs.bind(this)} />
+              <BookShelf books={this.state.wantToRead} shelf='Want To Read' shelfs={this.state.shelfs} updateAllShelfs={this.updateAllShelfs.bind(this)} />
+              <BookShelf books={this.state.read} shelf='Read' shelfs={this.state.shelfs} updateAllShelfs={this.updateAllShelfs.bind(this)} />
             </div>
             <div className="open-search">
               <Link to="/search" className="button">Add a book</Link>
@@ -71,7 +86,7 @@ class BooksApp extends React.Component {
         )}>
         </Route >
         <Route path="/search" render={() => (
-          <SearchBooks shelfs={this.state.shelfs}></SearchBooks>
+          <SearchBooks shelfs={this.state.shelfs} updateAllShelfs={this.updateAllShelfs.bind(this)}></SearchBooks>
         )}></Route>
       </div >
     )

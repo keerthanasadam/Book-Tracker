@@ -38,7 +38,8 @@ class SearchBooks extends React.Component {
         this.setState({
             shelf: value
         })
-        let shelfs = await BooksAPI.update(book, value);
+        await BooksAPI.update(book, value);
+        this.props.updateAllShelfs();
     }
 
     render() {
